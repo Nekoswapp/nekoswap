@@ -13,7 +13,7 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 const QUESTIONS_PER_SESSION = 10;
-const TIME_LIMIT_SECONDS = 60; // 1 menit
+const TIME_LIMIT_SECONDS =80; // 1 menit
 
 export default function QuizGame() {
   const [usedIndexes, setUsedIndexes] = useState<number[]>([]);
@@ -203,8 +203,6 @@ export default function QuizGame() {
           )}
         </div>
       )}
-      
     </div>
-    
   );
 }

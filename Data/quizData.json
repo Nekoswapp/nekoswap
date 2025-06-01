@@ -222,9 +222,9 @@
       {
         "question": "Apa peran dari 'state root' dalam mekanisme konsensus Ethereum dan bagaimana state root membantu menjaga integritas data pada blockchain?",
         "options": [
-          "Merepresentasikan snapshot dari semua akun dan saldo pada satu blok; memverifikasi konsistensi data secara efisien.",
-          "Menentukan harga gas untuk transaksi.",
-          "Menentukan urutan transaksi dalam blok.",
+            "Menentukan harga gas untuk transaksi.",
+            "Menentukan urutan transaksi dalam blok.",
+            "Merepresentasikan snapshot dari semua akun dan saldo pada satu blok; memverifikasi konsistensi data secara efisien.",
           "Menentukan validator yang berhak membuat blok."
         ],
         "answer": "Merepresentasikan snapshot dari semua akun dan saldo pada satu blok; memverifikasi konsistensi data secara efisien."
@@ -232,19 +232,19 @@
       {
         "question": "Jelaskan bagaimana mekanisme 'flash loan' bekerja dan sebutkan potensi risiko yang dapat dimanfaatkan oleh penyerang di DeFi?",
         "options": [
-          "Meminjam dana tanpa jaminan dalam satu transaksi; risiko termasuk manipulasi pasar dan serangan arbitrase.",
-          "Meminjam dana dengan jaminan crypto; risiko gagal bayar.",
-          "Menyimpan token untuk staking; risiko kehilangan reward.",
-          "Menukar token dengan biaya rendah; risiko slippage."
+            "Meminjam dana dengan jaminan crypto; risiko gagal bayar.",
+            "Menyimpan token untuk staking; risiko kehilangan reward.",
+            "Menukar token dengan biaya rendah; risiko slippage.",
+            "Meminjam dana tanpa jaminan dalam satu transaksi; risiko termasuk manipulasi pasar dan serangan arbitrase."
         ],
         "answer": "Meminjam dana tanpa jaminan dalam satu transaksi; risiko termasuk manipulasi pasar dan serangan arbitrase."
       },
       {
         "question": "Apa itu 'Merkle Tree' dan bagaimana strukturnya digunakan dalam verifikasi transaksi di blockchain?",
         "options": [
-          "Struktur data pohon hash yang memungkinkan verifikasi efisien dan aman dari set data besar tanpa mengakses seluruh data.",
-          "Algoritma kriptografi untuk enkripsi transaksi.",
-          "Protokol konsensus pada blockchain PoW.",
+            "Algoritma kriptografi untuk enkripsi transaksi.",
+            "Protokol konsensus pada blockchain PoW.",
+            "Struktur data pohon hash yang memungkinkan verifikasi efisien dan aman dari set data besar tanpa mengakses seluruh data.",
           "Jenis token non-fungible."
         ],
         "answer": "Struktur data pohon hash yang memungkinkan verifikasi efisien dan aman dari set data besar tanpa mengakses seluruh data."
@@ -252,9 +252,9 @@
       {
         "question": "Bagaimana algoritma konsensus Delegated Proof of Stake (DPoS) bekerja dan apa kelebihan utamanya dibandingkan Proof of Stake (PoS)?",
         "options": [
-          "Pemegang token memilih sejumlah delegasi untuk validasi blok; lebih cepat dan skalabel dibandingkan PoS.",
-          "Validator dirotasi secara acak; lebih desentralisasi dibandingkan PoS.",
-          "Memerlukan bukti kerja tambahan; lebih aman dibandingkan PoS.",
+            "Validator dirotasi secara acak; lebih desentralisasi dibandingkan PoS.",
+            "Memerlukan bukti kerja tambahan; lebih aman dibandingkan PoS.",
+            "Pemegang token memilih sejumlah delegasi untuk validasi blok; lebih cepat dan skalabel dibandingkan PoS.",
           "Menggunakan staking token langsung tanpa delegasi; lebih sederhana dibandingkan PoS."
         ],
         "answer": "Pemegang token memilih sejumlah delegasi untuk validasi blok; lebih cepat dan skalabel dibandingkan PoS."
@@ -272,8 +272,8 @@
       {
         "question": "Jelaskan apa itu 'oracle' dalam ekosistem blockchain dan bagaimana oracle menjaga keakuratan data di smart contract?",
         "options": [
-          "Oracle adalah pihak ketiga yang menyediakan data eksternal ke smart contract; menjaga keakuratan dengan berbagai metode validasi data.",
-          "Oracle adalah node validator di jaringan PoS.",
+            "Oracle adalah node validator di jaringan PoS.",
+            "Oracle adalah pihak ketiga yang menyediakan data eksternal ke smart contract; menjaga keakuratan dengan berbagai metode validasi data.",
           "Oracle adalah protokol untuk mengirim token antar chain.",
           "Oracle adalah algoritma untuk hashing data."
         ],
@@ -282,8 +282,8 @@
       {
         "question": "Dalam konteks zk-SNARKs, apa peran dari 'trusted setup' dan mengapa hal ini dianggap kontroversial?",
         "options": [
-          "Trusted setup adalah proses menghasilkan parameter awal yang diperlukan untuk zk-SNARKs; kontroversial karena jika bocor, bisa memungkinkan pembuatan bukti palsu.",
-          "Trusted setup adalah proses pemilihan validator baru dalam PoS.",
+            "Trusted setup adalah proses pemilihan validator baru dalam PoS.",
+            "Trusted setup adalah proses menghasilkan parameter awal yang diperlukan untuk zk-SNARKs; kontroversial karena jika bocor, bisa memungkinkan pembuatan bukti palsu.",
           "Trusted setup adalah protokol pengiriman token lintas-chain.",
           "Trusted setup adalah metode enkripsi data transaksi."
         ],
@@ -292,8 +292,8 @@
       {
         "question": "Apa perbedaan utama antara token ERC-20 dan ERC-721 di Ethereum?",
         "options": [
-          "ERC-20 adalah token fungible (identik dan dapat dipertukarkan), ERC-721 adalah token non-fungible (unik dan tidak dapat dipertukarkan).",
-          "ERC-20 adalah token untuk staking, ERC-721 untuk governance.",
+            "ERC-20 adalah token untuk staking, ERC-721 untuk governance.",
+            "ERC-20 adalah token fungible (identik dan dapat dipertukarkan), ERC-721 adalah token non-fungible (unik dan tidak dapat dipertukarkan).",
           "ERC-20 menggunakan proof-of-work, ERC-721 proof-of-stake.",
           "ERC-20 digunakan untuk NFT, ERC-721 untuk DeFi."
         ],
