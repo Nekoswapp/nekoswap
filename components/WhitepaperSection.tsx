@@ -15,13 +15,22 @@ export default function WhitepaperSection() {
             Temukan semua informasi tentang visi, teknologi, tokenomics, dan roadmap dari proyek NekoSwap. Whitepaper ini akan membantu Anda memahami arah masa depan platform kami.
           </p>
           <div className="flex justify-center">
-            <Link href="/Nekoswap_Whitepaper_Indonesia.pdf" target="_blank" rel="noopener noreferrer">
+            <Link href="/🐾 NekoSwap Whitepaper (ENGLESH).pdf" target="_blank" rel="noopener noreferrer">
               <Button
                 size="lg"
                 className="gap-3 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
               >
                 <FaFilePdf className="w-6 h-6" />
-                Unduh Whitepaper
+                Unduh Whitepaper (English)
+              </Button>
+            </Link>
+            <Link href="/🐾 NekoSwap Whitepaper (BAHASA INDONESIA).pdf" target="_blank" rel="noopener noreferrer">
+              <Button
+                size="lg"
+                className="gap-3 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
+              >
+                <FaFilePdf className="w-6 h-6" />
+                Unduh Whitepaper (INDONESIA)
               </Button>
             </Link>
           </div>
