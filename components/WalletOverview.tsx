@@ -4,10 +4,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Image from "next/image";
 import tokens from "@/Data/walletToken.json";
-import {
-  useAccount,
-  usePublicClient,
-} from "wagmi";
+import { useAccount } from "wagmi";
 
 const ERC20_ABI = [
   "function balanceOf(address owner) view returns (uint256)",
@@ -16,22 +13,17 @@ const ERC20_ABI = [
 
 export const WalletOverview = () => {
   const { address, isConnected } = useAccount();
-  const publicClient = usePublicClient();
-
   const [balances, setBalances] = useState<Record<string, string>>({});
   const [activityData, setActivityData] = useState<{ name: string; volume: number }[]>([]);
 
-  // Konversi viem provider ke ethers provider
-  const provider = publicClient
-    ? new ethers.JsonRpcProvider(publicClient.transport.url)
-    : undefined;
-
   useEffect(() => {
+    if (!isConnected || !address || typeof window === "undefined" || !window.ethereum) return;
+  
+    const provider = new ethers.BrowserProvider(window.ethereum);
+  
     const loadWalletData = async () => {
-      if (!isConnected || !address || !provider) return;
-
       const result: Record<string, string> = {};
-
+  
       for (const token of tokens) {
         try {
           if (token.address === "0x0000000000000000000000000000000000000000") {
@@ -46,32 +38,12 @@ export const WalletOverview = () => {
           result[token.symbol] = "0";
         }
       }
-
+  
       setBalances(result);
     };
-
-    const pollActivity = async () => {
-      if (!address || !provider) return;
-
-      const balance = await provider.getBalance(address);
-      const ethVolume = parseFloat(ethers.formatEther(balance));
-
-      const now = new Date();
-      const time = `${now.getHours()}:${now.getMinutes().toString().padStart(2, "0")}`;
-
-      setActivityData((prev) => {
-        const newData = [...prev, { name: time, volume: ethVolume }];
-        return newData.slice(-10);
-      });
-    };
-
+  
     loadWalletData();
-    pollActivity();
-
-    const interval = setInterval(pollActivity, 15000);
-    return () => clearInterval(interval);
-  }, [address, isConnected, provider]);
-
+  }, [address, isConnected]);
   return (
     <div className="w-full max-w-xl mx-auto px-4 py-6">
       <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white border-b-2 border-indigo-500 pb-2">
@@ -88,10 +60,10 @@ export const WalletOverview = () => {
         )}
       </p>
 
-      {/* Chart */}
+      {/* Chart Placeholder */}
       <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
         <h4 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">POL Activity</h4>
- 
+        {/* You can render chart here with `activityData` */}
       </div>
 
       {/* Token list */}

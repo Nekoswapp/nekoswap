@@ -1,265 +1,210 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import quizData from "@/Data/quizData.json";
 
-const nekoImages = [
-  { src: "/images/IDRT.png", alt: "Neko 1" },
-  { src: "/images/WBNB.png", alt: "Neko 2" },
-  { src: "/images/IDRX.png", alt: "Neko 3" },
-  { src: "/images/Solana.png", alt: "Neko 4" },
-  { src: "/images/Zerogic.png", alt: "Neko 5" },
-];
-
-const wild = { src: "/images/logo.png", alt: "Wild Neko" };
-
-type SlotItem = {
-  src: string;
-  alt: string;
-};
-
-const ROWS = 4;
-const COLS = 3;
-
-function getRandomSlotItem(): SlotItem {
-  if (Math.random() < 0.005) return wild; // 5% chance wild
-  return nekoImages[Math.floor(Math.random() * nekoImages.length)];
-}
-
-function generateSpinGrid(): SlotItem[][] {
-  const grid: SlotItem[][] = [];
-  for (let r = 0; r < ROWS; r++) {
-    const rowSlots: SlotItem[] = [];
-    for (let c = 0; c < COLS; c++) {
-      rowSlots.push(getRandomSlotItem());
-    }
-    grid.push(rowSlots);
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return grid;
+  return arr;
 }
 
-function checkWin(grid: SlotItem[][]): { win: boolean; winningRows: number[] } {
-  const winningRows: number[] = [];
+const QUESTIONS_PER_SESSION = 10;
+const TIME_LIMIT_SECONDS = 60; // 1 menit
 
-  for (let r = 0; r < grid.length; r++) {
-    const row = grid[r];
+export default function QuizGame() {
+  const [usedIndexes, setUsedIndexes] = useState<number[]>([]);
+  const [sessionQuestions, setSessionQuestions] = useState<typeof quizData>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [rewardMessage, setRewardMessage] = useState("");
+  const [timeLeft, setTimeLeft] = useState(TIME_LIMIT_SECONDS);
+  const [failedDueToTime, setFailedDueToTime] = useState(false);
 
-    const nonWild = row.find((item) => item.src !== wild.src);
-    if (!nonWild) {
-      winningRows.push(r);
-      continue;
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const pickNewSessionQuestions = () => {
+    const availableIndexes = quizData
+      .map((_, idx) => idx)
+      .filter((idx) => !usedIndexes.includes(idx));
+
+    let pickedIndexes: number[] = [];
+
+    if (availableIndexes.length === 0) {
+      setUsedIndexes([]);
+      pickedIndexes = shuffleArray(quizData.map((_, idx) => idx)).slice(0, QUESTIONS_PER_SESSION);
+    } else {
+      const count = Math.min(QUESTIONS_PER_SESSION, availableIndexes.length);
+      pickedIndexes = shuffleArray(availableIndexes).slice(0, count);
     }
 
-    const isWinningRow = row.every(
-      (item) => item.src === nonWild.src || item.src === wild.src
-    );
-
-    if (isWinningRow) {
-      winningRows.push(r);
-    }
-  }
-
-  return {
-    win: winningRows.length > 0,
-    winningRows,
-  };
-}
-
-export default function SlotGame() {
-  const [grid, setGrid] = useState<SlotItem[][]>(generateSpinGrid());
-  const [spinning, setSpinning] = useState(false);
-  const [animatingSlots, setAnimatingSlots] = useState(
-    Array(ROWS)
-      .fill(null)
-      .map(() => Array(COLS).fill(false))
-  );
-  const [winningRows, setWinningRows] = useState<number[]>([]);
-
-  // Token Neko sementara (hilang saat refresh)
-  const [tokens, setTokens] = useState<number>(0);
-
-  const addTokens = (amount: number) => {
-    setTokens((prev) => prev + amount);
+    setUsedIndexes((prev) => [...prev, ...pickedIndexes]);
+    setSessionQuestions(pickedIndexes.map((idx) => quizData[idx]));
+    setCurrentQuestionIndex(0);
+    setSelected(null);
+    setScore(0);
+    setFinished(false);
+    setRewardMessage("");
+    setFailedDueToTime(false);
+    setTimeLeft(TIME_LIMIT_SECONDS);
   };
 
-  const slotSize = 70;
+  useEffect(() => {
+    pickNewSessionQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const spinColumns = () => {
-    if (spinning) return;
-    setSpinning(true);
-    setWinningRows([]);
-
-    const spinsCount = 20;
-    const spinDelay = 80;
-
-    let currentSpin = 0;
-
-    const interval = setInterval(() => {
-      setAnimatingSlots(
-        Array(ROWS)
-          .fill(null)
-          .map(() => Array(COLS).fill(true))
-      );
-
-      setTimeout(() => {
-        setGrid((prevGrid) => {
-          const newGrid: SlotItem[][] = [];
-
-          for (let r = 0; r < ROWS; r++) {
-            newGrid[r] = [];
-            for (let c = 0; c < COLS; c++) {
-              const fromRow = (r - 1 + ROWS) % ROWS;
-              newGrid[r][c] = prevGrid[fromRow][c];
-            }
-          }
-
-          for (let c = 0; c < COLS; c++) {
-            newGrid[0][c] = getRandomSlotItem();
-          }
-
-          return newGrid;
-        });
-
-        setAnimatingSlots(
-          Array(ROWS)
-            .fill(null)
-            .map(() => Array(COLS).fill(false))
-        );
-      }, 300);
-
-      currentSpin++;
-      if (currentSpin >= spinsCount) {
-        clearInterval(interval);
-        setSpinning(false);
-
-        setTimeout(() => {
-          setGrid((currentGrid) => {
-            const result = checkWin(currentGrid);
-            if (result.win) {
-              setWinningRows(result.winningRows);
-              addTokens(result.winningRows.length);
-              alert(
-                `🎉 Selamat! Kamu menang di baris: ${result.winningRows
-                  .map((r) => r + 1)
-                  .join(", ")}\n` +
-                  `Kamu mendapatkan ${result.winningRows.length} token neko!`
-              );
-            } else {
-              setWinningRows([]);
-            }
-            return currentGrid;
-          });
-        }, 400);
+  // Timer countdown
+  useEffect(() => {
+    if (finished) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
       }
-    }, spinDelay);
+      return;
+    }
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current!);
+          setFinished(true);
+          setFailedDueToTime(true);
+          setRewardMessage("");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [finished]);
+
+  const currentQuestion = sessionQuestions[currentQuestionIndex];
+
+  const handleAnswer = (option: string) => {
+    if (selected || finished) return;
+    setSelected(option);
+
+    const isCorrect = option === currentQuestion.answer;
+    if (isCorrect) setScore((prev) => prev + 1);
+
+    setTimeout(() => {
+      if (currentQuestionIndex + 1 < sessionQuestions.length) {
+        setCurrentQuestionIndex((prev) => prev + 1);
+        setSelected(null);
+      } else {
+        setFinished(true);
+        if (score + (isCorrect ? 1 : 0) === sessionQuestions.length) {
+          setRewardMessage("🎁 Selamat! Kamu mendapatkan 10 NEKO! Screenshot dan kirim ke Telegram.");
+        } else {
+          setRewardMessage("");
+        }
+      }
+    }, 1000);
   };
+
+  const nextSession = () => {
+    pickNewSessionQuestions();
+  };
+
+  if (sessionQuestions.length === 0) {
+    return (
+      <div className="text-center p-10 text-gray-700 dark:text-gray-300">Memuat pertanyaan...</div>
+    );
+  }
 
   return (
-    <div style={{ paddingBottom: "100px", backgroundColor: "black" }}>
-      <div
-        style={{
-          margin: "20px auto",
-          maxWidth: `${COLS * (slotSize + 10)}px`,
-          padding: 10,
-          borderRadius: 16,
-          boxShadow: "0 8px 20px rgba(236,72,153,0.2)",
-          userSelect: "none",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 5,
-            justifyContent: "center",
-          }}
-        >
-          {grid.flatMap((row, rIdx) =>
-            row.map((item, cIdx) => {
-              const isAnimating = animatingSlots[rIdx][cIdx];
-              const isWinningRow = winningRows.includes(rIdx);
+    <div className="max-w-xl mx-auto px-6 py-10 bg-white dark:bg-gray-900 shadow-2xl rounded-3xl">
+      <div className="mb-6 text-center">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Web3 Quiz Game</h1>
+        <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
+          Uji pengetahuanmu seputar blockchain & crypto
+        </p>
+      </div>
 
-              return (
-                <div
-                  key={`${rIdx}-${cIdx}-${item.src}`}
-                  style={{
-                    width: slotSize,
-                    height: slotSize,
-                    borderRadius: 12,
-                    overflow: "hidden",
-                    boxShadow: isWinningRow
-                      ? "0 0 15px 4px rgba(236,72,153,0.8)"
-                      : "0 2px 10px rgba(0,0,0,0.1)",
-                    backgroundColor: isWinningRow ? "#fee" : "white",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    animation: isAnimating ? "shake 0.4s ease-in-out infinite" : "none",
-                    transition: "box-shadow 0.3s, background-color 0.3s",
-                  }}
-                >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    style={{
-                      width: "70%",
-                      height: "70%",
-                      objectFit: "contain",
-                      userSelect: "none",
-                      pointerEvents: "none",
-                    }}
-                    draggable={false}
-                  />
-                </div>
-              );
-            })
-          )}
+      <div className="mb-4 flex justify-between items-center">
+        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden mr-4">
+          <div
+            className="h-full bg-indigo-600 transition-all duration-500"
+            style={{
+              width: `${((currentQuestionIndex + (finished ? 1 : 0)) / sessionQuestions.length) * 100}%`,
+            }}
+          />
+        </div>
+        <div className="text-sm font-medium text-gray-800 dark:text-white w-16 text-right">
+          {timeLeft}s
         </div>
       </div>
 
-      <div style={{ textAlign: "center", marginTop: 16 }}>
-        <button
-          onClick={spinColumns}
-          disabled={spinning}
-          style={{
-            backgroundColor: spinning ? "#aaa" : "#ec4899",
-            color: "white",
-            border: "none",
-            borderRadius: 10,
-            padding: "14px 36px",
-            cursor: spinning ? "not-allowed" : "pointer",
-            fontWeight: "700",
-            fontSize: 18,
-            userSelect: "none",
-            boxShadow: "0 6px 15px rgba(236,72,153,0.6)",
-            transition: "background-color 0.3s",
-          }}
-        >
-          {spinning ? "Spinning..." : "Spin"}
-        </button>
-      </div>
+      {!finished ? (
+        <>
+          <div className="mb-6">
+            <h2 className="text-lg font-medium text-gray-800 dark:text-white">{currentQuestion.question}</h2>
+          </div>
+          <div className="space-y-4">
+            {currentQuestion.options.map((option) => {
+              const isCorrect = selected && option === currentQuestion.answer;
+              const isWrong = selected === option && option !== currentQuestion.answer;
 
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: 24,
-          color: "white",
-          fontWeight: "700",
-          fontSize: 20,
-          userSelect: "none",
-        }}
-      >
-        Reward $NEKO: {tokens}
-      </div>
-     
-
-      <style>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-4px) rotate(-2deg); }
-          50% { transform: translateX(4px) rotate(2deg); }
-          75% { transform: translateX(-4px) rotate(-2deg); }
-        }
-      `}</style>
+              return (
+                <button
+                  key={option}
+                  onClick={() => handleAnswer(option)}
+                  className={`w-full px-5 py-3 rounded-xl border text-sm font-medium transition-all
+                    ${
+                      isCorrect
+                        ? "bg-green-100 text-green-800 border-green-300"
+                        : isWrong
+                        ? "bg-red-100 text-red-800 border-red-300"
+                        : "bg-white dark:bg-gray-800 text-gray-800 dark:text-white border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    }`}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <div className="text-center space-y-6 mt-10">
+          {failedDueToTime ? (
+            <>
+              <h2 className="text-2xl font-semibold text-red-600 dark:text-red-400">
+                ⏰ Waktu habis! Kamu gagal. Silakan coba lagi.
+              </h2>
+              <button
+                onClick={nextSession}
+                className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700"
+              >
+                Mulai Ulang
+              </button>
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">🎉 Selesai!</h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Skor kamu: <span className="font-bold text-indigo-600">{score}</span> / {sessionQuestions.length}
+              </p>
+              {rewardMessage && <p className="text-green-600 font-semibold">{rewardMessage}</p>}
+              <button
+                onClick={nextSession}
+                className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+              >
+                Lanjut Pertanyaan Berikutnya
+              </button>
+            </>
+          )}
+        </div>
+      )}
+      
     </div>
+    
   );
 }

@@ -77,7 +77,7 @@ const BottomNavbar = () => {
                 NFT
               </button>
               <button
-                onClick={() => navigate("/docs")}
+                onClick={() => navigate("/games")}
                 className="block w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 transition-colors rounded"
               >
                 Games
@@ -92,7 +92,7 @@ const BottomNavbar = () => {
                 onClick={() => navigate("/Lauchpad")}
                 className="block w-full text-left px-4 py-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 transition-colors rounded"
               >
-                Lauchpad
+                Nekopad
               </button>
               <div className="border-t border-gray-300 dark:border-gray-700 mt-1 px-4 py-2">
                 <ThemeSwitch />

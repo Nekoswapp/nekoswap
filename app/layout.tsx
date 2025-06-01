@@ -10,7 +10,7 @@ import BottomNavbar from "@/components/BottomNavbar";
 import React from "react";
 import { Inter, Fira_Code } from 'next/font/google';
 import { Navbar } from "@/components/navbar";
-import MobileBrowserWarning from "@/components/MobileBrowserWarning";
+
 
 const firaCode = Fira_Code({ subsets: ['latin'] });
 const inter = Inter({
@@ -50,7 +50,7 @@ export default function RootLayout({
             <div className="relative flex flex-col h-screen">
              <Navbar/>
               <BottomNavbar/>
-              <MobileBrowserWarning/>
+    
               <ToastContainer />
               <main className="container mx-auto max-w-7xl  px-6 flex-grow">
                 {children}

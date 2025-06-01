@@ -5,8 +5,8 @@ import TokenPriceDisplay from "./PriceNeko";
 
 export function Footer() {
   return (
-    <footer className="py-10 px-6 md:px-20 text-gray-800 dark:text-white bg-white dark:bg-black transition-colors duration-300">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0 border-t border-gray-200 dark:border-gray-700 pt-8">
+    <footer className="py-2 px-2 md:px-0 text-gray-800 dark:text-white bg-white dark:bg-black transition-colors duration-300">
+      <div className="max-w-7xl mx-auto flex flex-wrap  md:flex-row justify-center items-center gap-8 md:gap-0 border-t border-gray-200 dark:border-gray-700 pt-8">
         {/* Logo + Branding */}
         <div className="flex items-center space-x-3 md:flex-1">
           <div className="w-10 h-10 rounded-full overflow-hidden shadow-md">

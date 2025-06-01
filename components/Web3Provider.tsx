@@ -13,7 +13,8 @@ import {
   arbitrum,
   bsc,
   cronos,
-  base
+  base,
+  sonic
 } from 'wagmi/chains'
 
 import '@rainbow-me/rainbowkit/styles.css'
@@ -102,14 +103,15 @@ const connectors = connectorsForWallets(
 
 // 2. Wagmi + RainbowKit Config
 export const config = createConfig({
-  chains: [mainnet, base,polygon,bsc,cronos],
+  chains: [mainnet, base,polygon,bsc,cronos,sonic],
   connectors,
   transports: {
     [mainnet.id]: http(),
+    [sonic.id]: http(),
     [cronos.id]: http(),
     [base.id]: http(),
     [bsc.id]: http(),
-    [polygon.id]: http('https://polygon-rpc.com'),
+    [polygon.id]: http(),
   },
 } )
 

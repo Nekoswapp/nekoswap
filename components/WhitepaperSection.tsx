@@ -15,7 +15,7 @@ export default function WhitepaperSection() {
           Explore the vision, core technology, token model, and future roadmap of NekoSwap. This whitepaper outlines our commitment to building a community-driven DeFi ecosystem.
           </p>
           <div className="flex justify-center flex-wrap gap5 ">
-            <Link href="/🐾 NekoSwap Whitepaper (ENGLESH).pdf" target="_blank" rel="noopener noreferrer">
+            <Link href="/NekoSwap Whitepaper (ENGLESH).pdf" target="_blank" rel="noopener noreferrer">
               <Button
                 size="lg"
                 className="gap-5 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
@@ -24,7 +24,7 @@ export default function WhitepaperSection() {
                (English)
               </Button>
             </Link>
-            <Link href="/🐾 NekoSwap Whitepaper (BAHASA INDONESIA).pdf" target="_blank" rel="noopener noreferrer">
+            <Link href="/NekoSwap Whitepaper (BAHASA INDONESIA).pdf" target="_blank" rel="noopener noreferrer">
               <Button
                 size="lg"
                 className="gap-3 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"

@@ -81,7 +81,9 @@ export default function Page() {
         {activeTab === "addLiquidity" && <AddLiquidityCard />}
         {activeTab === "removeLiquidity" && <RemoveLiquidityCard />}
       </div>
+     
       <Footer/>
+      
     </div>
   );
 }
