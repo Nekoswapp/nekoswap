@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 };
 export const metadata = {
   title: "Nekoswap",
-  description: "(AMM) AUTO MARKET MAKER",
+  description: "Nekoswap goes beyond being just an AMM — it also offers staking features, token reward quizzes, and on-chain games fully integrated with smart contracts. Join the Web3 revolution with Nekoswap and earn while you interact!",
 };
 
 export default function RootLayout({

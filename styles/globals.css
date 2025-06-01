@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 /* app/globals.css atau styles/globals.css */
+:root {
+  font-family: var(--font-inter), sans-serif;
+}
 .animated-connect-btn {
   background: linear-gradient(270deg, #ffa500, #ff8c00, #ffa500);
   background-size: 400% 400%;
