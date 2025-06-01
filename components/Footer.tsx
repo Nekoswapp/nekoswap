@@ -1,6 +1,6 @@
 "use client";
 
-import { FaTwitter, FaDiscord, FaGithub } from "react-icons/fa";
+import { FaTwitter, FaDiscord, FaGithub, FaTelegram } from "react-icons/fa";
 import TokenPriceDisplay from "./PriceNeko";
 
 export function Footer() {
@@ -36,7 +36,7 @@ export function Footer() {
         {/* Social Icons */}
         <div className="flex space-x-7 md:flex-1 justify-center md:justify-end text-2xl text-gray-800 dark:text-white">
           <a
-            href="https://twitter.com/nekoswap"
+            href="https://x.com/Nekoswap_"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Twitter"
@@ -54,13 +54,13 @@ export function Footer() {
             <FaDiscord />
           </a>
           <a
-            href="https://github.com/nekoswap"
+            href="https://t.me/nekoswap_dex"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
             className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-300"
           >
-            <FaGithub />
+            <FaTelegram />
           </a>
         </div>
       </div>

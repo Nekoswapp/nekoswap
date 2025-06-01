@@ -90,7 +90,7 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [rainbowWallet, walletConnectWallet,injectedWallet,trustWallet],
+      wallets: [trustWallet,rainbowWallet, walletConnectWallet,injectedWallet,],
     },
   ],
   {

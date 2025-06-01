@@ -132,11 +132,20 @@ const PoolList: React.FC<PoolListProps> = ({ pools }) => {
         // Jika di contract tidak ada fungsi apr, bisa hardcode atau ambil dari API
         if (typeof contract.getAPR === "function") {
           const aprBig = await contract.getAPR();
-          const aprNum = parseFloat(ethers.formatUnits(aprBig, 2)); // asumsi decimals 2 untuk APR
-          setAprMap((prev) => ({ ...prev, [pool.id]: aprNum.toFixed(2) }));
+        
+          // Misalnya APR disimpan dalam 1e18 seperti token ERC20
+          const apr = Number(ethers.formatUnits(aprBig, 13)) * 100; // hasil dalam %
+          const aprFormatted = apr.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        
+          setAprMap((prev) => ({ ...prev, [pool.id]: aprFormatted }));
         } else {
-          // fallback jika contract tidak punya apr function
-          setAprMap((prev) => ({ ...prev, [pool.id]: pool.apr.toFixed(2) }));
+          setAprMap((prev) => ({
+            ...prev,
+            [pool.id]: pool.apr.toFixed(2),
+          }));
         }
       } catch (err) {
         console.error(`Failed to fetch pool stats for pool ${pool.id}:`, err);

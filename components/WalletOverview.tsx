@@ -8,7 +8,6 @@ import {
   useAccount,
   usePublicClient,
 } from "wagmi";
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 const ERC20_ABI = [
   "function balanceOf(address owner) view returns (uint256)",
@@ -92,26 +91,7 @@ export const WalletOverview = () => {
       {/* Chart */}
       <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
         <h4 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">POL Activity</h4>
-        <ResponsiveContainer width="100%" height={200}>
-          <AreaChart data={activityData}>
-            <defs>
-              <linearGradient id="colorVolume" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="name" stroke="#ccc" />
-            <YAxis width={40} stroke="#ccc" />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="volume"
-              stroke="#4f46e5"
-              fillOpacity={1}
-              fill="url(#colorVolume)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+ 
       </div>
 
       {/* Token list */}

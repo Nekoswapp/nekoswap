@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { ethers } from "ethers";
+import { ethers, Contract, Signer, Provider } from "ethers";
 import Farming from "../Data/Farming";
 import { useAccount } from "wagmi";
 import { ToastContainer, toast } from 'react-toastify';
-import { useReadContract } from 'wagmi'
+import Abi from "../Data/Abi";
 type Pool = {
   id: number;
   TokenReward: string;
@@ -19,6 +19,7 @@ type Pool = {
   claimableReward?: number;
   decimalsReward: number;
   decimalsStake: number;
+  tokenStakeAddres: string;
 };
 
 interface FarmsProps {
@@ -131,11 +132,20 @@ const Farms: React.FC<FarmsProps> = ({ farms }) => {
         // Jika di contract tidak ada fungsi apr, bisa hardcode atau ambil dari API
         if (typeof contract.getAPR === "function") {
           const aprBig = await contract.getAPR();
-          const aprNum = parseFloat(ethers.formatUnits(aprBig, 2)); // asumsi decimals 2 untuk APR
-          setAprMap((prev) => ({ ...prev, [pool.id]: aprNum.toFixed(2) }));
+        
+          // Misalnya APR disimpan dalam 1e18 seperti token ERC20
+          const apr = Number(ethers.formatUnits(aprBig, 5)) * 100; // hasil dalam %
+          const aprFormatted = apr.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        
+          setAprMap((prev) => ({ ...prev, [pool.id]: aprFormatted }));
         } else {
-          // fallback jika contract tidak punya apr function
-          setAprMap((prev) => ({ ...prev, [pool.id]: pool.apr.toFixed(2) }));
+          setAprMap((prev) => ({
+            ...prev,
+            [pool.id]: pool.apr.toFixed(2),
+          }));
         }
       } catch (err) {
         console.error(`Failed to fetch pool stats for pool ${pool.id}:`, err);
@@ -186,12 +196,37 @@ const Farms: React.FC<FarmsProps> = ({ farms }) => {
         toast.error("Transaksi gagal");
         return;
       }
+      function getTokenContract(
+        tokenAddress: string,
+        signerOrProvider: Signer | Provider
+      ): Contract {
+        const ERC20_ABI = [
+          "function approve(address spender, uint256 amount) public returns (bool)",
+          "function allowance(address owner, address spender) public view returns (uint256)"
+        ];
+        return new ethers.Contract(tokenAddress, ERC20_ABI, signerOrProvider);
+      }
+ 
 
       try {
+        const tokenContract = getTokenContract(pool.tokenStakeAddres, signer); // Fungsi untuk ambil ERC20 contract
+        const stakingContract = getContract(pool.contractAddress); // Kontrak staking
+  
         const contract = getContract(pool.contractAddress);
         const value = nativeFees[pool.id] ?? ethers.parseEther("0");
         const amountInWei = ethers.parseUnits(amount.toString(), pool.decimalsStake);
 
+        
+        const ownerAddress = await signer.getAddress();
+        const allowance = await tokenContract.allowance(ownerAddress, pool.contractAddress);
+  
+        // ✅ Approve jika allowance kurang dari jumlah yang mau di-stake
+        if (allowance < amountInWei) {
+          const approveTx = await tokenContract.approve(pool.contractAddress, amountInWei);
+          await approveTx.wait();
+          console.log("✅ Approve success");
+        }
+  
         const tx = await contract.stake(amountInWei, { value });
         await tx.wait();
 
@@ -284,7 +319,7 @@ const Farms: React.FC<FarmsProps> = ({ farms }) => {
             </div>
             <div>
               <p className="font-medium">APR</p>
-              <p className="text-sm font-semibold">{aprMap[pool.id] ?? pool.apr.toFixed(2)}%</p>
+              <p className="text-lg font-semibold">{aprMap[pool.id] ?? pool.apr.toFixed(2)}%</p>
             </div>
             <div>
               <p className="font-medium">Your Stake</p>

@@ -2,20 +2,7 @@
 import React from "react";
 
 const launchpadTokens = [
-  {
-    name: "NekoToken",
-    symbol: "NEKO",
-    logo: "/images/logo.png",
-    launchDate: "June 15, 2025",
-    description:
-      "NekoToken is the native utility token for Nekoswap ecosystem, powering staking, governance, and rewards.",
-    features: [
-      "Staking rewards",
-      "Governance voting",
-      "Liquidity mining incentives",
-    ],
-    listingUrl: "/launchpad/neko-token",
-  },
+ 
   {
     name: "ZerogicNFT",
     symbol: "ZFT",

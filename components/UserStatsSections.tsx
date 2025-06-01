@@ -47,7 +47,7 @@ export default function UserStatsSection() {
                 key={i}
                 className="rounded-2xl p-6 w-full max-w-sm text-left border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
               >
-                <div className="text-4xl font-extrabold text-orange-500 mb-2">
+                <div className="text-4xl font-extrabold text-pink-500 mb-2">
                   <CountUp
                     end={stat.value}
                     start={0}
