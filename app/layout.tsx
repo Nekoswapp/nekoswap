@@ -10,13 +10,20 @@ import BottomNavbar from "@/components/BottomNavbar";
 import React from "react";
 import { Inter, Fira_Code } from 'next/font/google';
 import { Navbar } from "@/components/navbar";
+import { Poppins } from "next/font/google";
 
+export const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 const firaCode = Fira_Code({ subsets: ['latin'] });
 const inter = Inter({
   subsets: ['latin'],
   weight: 'variable',
-  variable: '--font-inter', // ini hanya valid jika `display: 'swap'` atau lainnya ikut diset
+  variable: "--font-poppins", // ini hanya valid jika `display: 'swap'` atau lainnya ikut diset
   display: 'swap',
 });
 

@@ -22,7 +22,8 @@ export default function HeroSection() {
             className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
             radius="full"
           >
-            Trade
+            <a href="/addliquidity">Trade</a>
+            
           </Button>
           <Button color="primary" variant="ghost">
             Learn
