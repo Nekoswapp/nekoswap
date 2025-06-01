@@ -14,10 +14,9 @@ export default function HeroSection() {
           Welcome to <span className="text-orange-500">NekoSwap</span>
         </h1>
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-6">
-          A fast, secure, and user-friendly{" "}
-          <strong>decentralized exchange (DEX)</strong> platform. Swap, earn,
-          and grow your assets with the latest Web3 technology.
-        </p>
+  A next-gen <strong>decentralized crypto exchange (DEX)</strong> designed for speed, security, and simplicity. Swap tokens and grow your crypto with powerful Web3 tools.
+</p>
+
         <div className="flex gap-5 items-center justify-center">
           <Button
             className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"

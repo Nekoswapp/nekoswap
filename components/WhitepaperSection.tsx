@@ -12,16 +12,16 @@ export default function WhitepaperSection() {
             📄 Whitepaper NekoSwap
           </h2>
           <p className="text-lg md:text-xl text-zinc-700 dark:text-zinc-300 mb-10 leading-relaxed">
-            Temukan semua informasi tentang visi, teknologi, tokenomics, dan roadmap dari proyek NekoSwap. Whitepaper ini akan membantu Anda memahami arah masa depan platform kami.
+          Explore the vision, core technology, token model, and future roadmap of NekoSwap. This whitepaper outlines our commitment to building a community-driven DeFi ecosystem.
           </p>
-          <div className="flex justify-center">
+          <div className="flex justify-center flex-wrap gap5 ">
             <Link href="/🐾 NekoSwap Whitepaper (ENGLESH).pdf" target="_blank" rel="noopener noreferrer">
               <Button
                 size="lg"
-                className="gap-3 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
+                className="gap-5 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
               >
                 <FaFilePdf className="w-6 h-6" />
-                Unduh Whitepaper (English)
+               (English)
               </Button>
             </Link>
             <Link href="/🐾 NekoSwap Whitepaper (BAHASA INDONESIA).pdf" target="_blank" rel="noopener noreferrer">
@@ -30,7 +30,7 @@ export default function WhitepaperSection() {
                 className="gap-3 px-8 py-5 text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
               >
                 <FaFilePdf className="w-6 h-6" />
-                Unduh Whitepaper (INDONESIA)
+                 (Indonesia)
               </Button>
             </Link>
           </div>
