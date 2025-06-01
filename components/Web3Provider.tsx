@@ -94,7 +94,7 @@ const connectors = connectorsForWallets(
     },
   ],
   {
-    appName: 'My RainbowKit App',
+    appName: 'Nekoswap',
     projectId: 'f79a38e56bf80c47e010dc510d552243',
   }
 );
