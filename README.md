@@ -1,1 +1,1 @@
-WELCOME TO nekoseap.org a next generation on the decentralized exchange
+WELCOME TO nekoswap.org a next generation on the decentralized exchange
