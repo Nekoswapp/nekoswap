@@ -36,15 +36,7 @@ export default function RemoveLiquidityCard() {
     return provider.getSigner();
   }, [walletClient]);
 
-  const getContract = useCallback(
-    (addr: string, abi: any) => {
-      if (!walletClient) throw new Error("Wallet not connected");
-      const provider = new BrowserProvider(walletClient.transport as Eip1193Provider);
-      return new ethers.Contract(addr, abi, provider);
-    },
-    [walletClient]
-  );
-
+ 
   async function getPairAddress(
     router: ethers.Contract,
     tokenA: string,
