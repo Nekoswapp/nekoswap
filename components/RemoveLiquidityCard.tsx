@@ -84,7 +84,7 @@ export default function RemoveLiquidityCard() {
         await tx.wait();
         toast.success("Approve success!", { position: "bottom-left" });
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("Approve failed", err);
       toast.error("Approve failed:");
       throw err;

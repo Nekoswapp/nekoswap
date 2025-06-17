@@ -1,6 +1,6 @@
 # 🐾 Welcome to NekoSwap.org
 
-![NekoSwap Banner](https://nekoswap.org/logo.png)
+![NekoSwap Banner](https://nekoswap.org/images/logo.png)
 
 > 🚀 The next generation of decentralized exchange – fast, fun, and built for the future of DeFi.
 
