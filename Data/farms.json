@@ -1,0 +1,34 @@
+[
+    {
+      "id": 1,
+      "TokenReward": "IDRT",
+      "name": "NEKO POL",
+      "amount":0,
+      "apr": 0,
+      "status": "active",
+      "logo": "1234.png",
+      "userStake": 0,
+      "rewardToken": 0,
+      "decimalsReward": 6,
+      "decimalsStake": 18,
+      "contractAddress": "0x82fb9c98F6E49297687b8A806eCFc39927a30bf5",
+      "tokenStakeAddres": "0x06093b332DD108D50Ced41B595E0cEa9b7dC49a9"
+    },
+    {
+      "id": 2,
+      "TokenReward": "USDT",
+      "name": "NEKO IDRX",
+      "amount":0,
+      "apr": 0,
+      "status": "active",
+      "logo": "idrxN.png",
+      "userStake": 0,
+      "rewardToken": 0,
+      "decimalsReward": 6,
+      "decimalsStake": 18,
+      "contractAddress": "0x6725315Ea2999d84C99572469289f650a78c2B55",
+      "tokenStakeAddres": "0x140C07a8801f7F8b93A95CBA63144271c93321E8"
+    }
+   
+  
+  ]

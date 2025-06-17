@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Nekoswap ",
+    "symbol": "Neko",
+    "address": "0x808e4f1d6e0A507b031a1136601f5962A8AAC7a2",
+    "logo": "/images/logo.png",
+    "decimals": 18
+  },
+    {
+      "name": "Polygon",
+      "symbol": "POL",
+      "address": "0x0000000000000000000000000000000000000000",
+      "logo": "/images/WPOL.png",
+      "decimals": 18
+    },
+    {
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "address": "00x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+      "logo": "/images/BTC.png",
+      "decimals": 18
+    },
+    {
+      "name": "Solana",
+      "symbol": "SOL",
+      "address": "0xd93f7e271cb87c23aaa73edc008a79646d1f9912",
+      "logo": "/images/Solana.png",
+      "decimals": 9
+    },
+    {
+      "name": "IDRX",
+      "symbol": "IDRX",
+      "address": "0x649a2DA7B28E0D54c13D5eFf95d3A660652742cC",
+      "logo": "/images/IDRX.png",
+      "decimals": 0
+    },
+    {
+      "name": "IDRT",
+      "symbol": "IDRT",
+      "address": "0x554cd6bdD03214b10AafA3e0D4D42De0C5D2937b",
+      "logo": "/images/IDRT.png",
+      "decimals": 6
+    },
+    {
+      "name": "USDT",
+      "symbol": "USDT",
+      "address": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+      "logo": "/images/USDT.png",
+      "decimals": 6
+    },
+    {
+      "name": "USDC",
+      "symbol": "USDC",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "logo": "/images/USDCe.png",
+      "decimals": 6
+    }
+   
+  
+  ]
+  

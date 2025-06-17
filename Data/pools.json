@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "TokenReward": "IDRX",
+    "name": "NEKO",
+    "amount":0,
+    "apr": 0,
+    "status": "active",
+    "logo": "NEKOi.png",
+    "userStake": 0,
+    "rewardToken": 0,
+    "decimalsReward": 0,
+    "decimalsStake": 18,
+    "contractAddress": "0x5d465afcEAFA7747dd809216F2c963Af88c1F3a1",
+    "tokenStakeAddres": "0x808e4f1d6e0A507b031a1136601f5962A8AAC7a2"
+  },
+  {
+    "id": 4,
+    "TokenReward": "NEKO",
+    "name": "NEKO",
+    "amount":0,
+    "apr": 0,
+    "status": "active",
+    "logo": "nekoS.png",
+    "userStake": 0,
+    "rewardToken": 0,
+    "decimalsReward": 18,
+    "decimalsStake": 18,
+    "contractAddress": "0x0Cc36310eabe23Fb723eA62B6248f0284b3d39a2",
+    "tokenStakeAddres": "0x808e4f1d6e0A507b031a1136601f5962A8AAC7a2"
+  },
+  {
+    "id": 2,
+    "TokenReward": "SOL",
+    "name": "NEKO",
+    "amount":0,
+    "apr": 0,
+    "status": "inactive",
+    "logo": "sss.png",
+    "userStake": 0,
+    "rewardToken": 0,
+    "decimalsReward": 9,
+    "decimalsStake": 18,
+    "contractAddress": "0x498f8fa9f987d484e6974ced610de945a6fc427f",
+    "tokenStakeAddres": "0x808e4f1d6e0A507b031a1136601f5962A8AAC7a2"
+  },
+  {
+    "id": 3,
+    "TokenReward": "USDT",
+    "name": "NEKO",
+    "amount":0,
+    "apr": 0,
+    "status": "inactive",
+    "logo": "nekoT.png",
+    "userStake": 0,
+    "rewardToken": 0,
+    "decimalsReward": 6,
+    "decimalsStake": 18,
+    "contractAddress": "0x132Fa08fd5b3D9a2B8C8D8B678335799c919DAdD",
+    "tokenStakeAddres": "0x808e4f1d6e0A507b031a1136601f5962A8AAC7a2"
+  },
+ 
+  {
+    "id": 5,
+    "TokenReward": "POL",
+    "name": "NEKO",
+    "amount":0,
+    "apr": 0,
+    "status": "inactive",
+    "logo": "POLn.png",
+    "userStake": 0,
+    "rewardToken": 0,
+    "decimalsReward": 18,
+    "decimalsStake": 18,
+    "contractAddress": "0xE9bC8e21F6d2bFccAeDab4D4adFE2b3F88da7e07",
+    "tokenStakeAddres": "0x808e4f1d6e0A507b031a1136601f5962A8AAC7a2"
+  }
+   
+  ]

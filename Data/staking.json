@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "name": "RoxyFi Pool",
+      "apr": "12%",
+      "lockPeriod": "30 Days",
+      "rewardToken": "ROXY"
+    },
+    {
+      "id": 3,
+      "name": "usdt Pool",
+      "apr": "12%",
+      "lockPeriod": "30 Days",
+      "rewardToken": "ROXY"
+    },
+    {
+      "id": 2,
+      "name": "Polygon Pool",
+      "apr": "18%",
+      "lockPeriod": "60 Days",
+      "rewardToken": "MATIC"
+    }
+  ]
+  

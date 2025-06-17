@@ -1,0 +1,453 @@
+[
+    {
+      "question": "Apa nama blockchain yang dikembangkan oleh Ethereum Foundation?",
+      "options": ["Bitcoin",  "Solana", "Cardano","Ethereum"],
+      "answer": "Ethereum"
+    },
+    {
+      "question": "Apa kepanjangan dari NFT?",
+      "options": [
+          "Network File Transfer",
+          "New Future Token",
+          "Non Fungible Token",
+        "Not For Trade"
+      ],
+      "answer": "Non Fungible Token"
+    },
+    {
+      "question": "Apa itu smart contract?",
+      "options": [
+        "Dokumen hukum",
+        "Aplikasi di blockchain",
+        "Wallet address",
+        "Token ERC-20"
+      ],
+      "answer": "Aplikasi di blockchain"
+    },
+    {
+      "question": "Apa consensus mechanism yang digunakan Ethereum saat ini?",
+      "options": ["Proof of Work", "Proof of Stake", "Delegated Proof of Stake", "Proof of Authority"],
+      "answer": "Proof of Stake"
+    },
+    {
+      "question": "Apa fungsi dari token ERC-20 di Ethereum?",
+      "options": [
+          "Alamat wallet",
+          "Jenis konsensus",
+          "Jaringan blockchain",
+          "Standar token untuk smart contract"
+      ],
+      "answer": "Standar token untuk smart contract"
+    },
+    {
+      "question": "Apa itu gas fee di Ethereum?",
+      "options": [
+        "Biaya untuk transfer token",
+        "Biaya untuk menjalankan transaksi atau kontrak",
+        "Reward untuk validator",
+        "Nama token"
+      ],
+      "answer": "Biaya untuk menjalankan transaksi atau kontrak"
+    },
+    {
+      "question": "Apa itu DeFi?",
+      "options": [
+          "Digital Finance",
+          "Distributed File",
+          "Decentralized Finance",
+        "Data Finance"
+      ],
+      "answer": "Decentralized Finance"
+    },
+    {
+      "question": "Apa itu staking dalam crypto?",
+      "options": [
+        "Menyimpan token di wallet",
+        "Mengunci token untuk mendukung jaringan dan mendapatkan reward",
+        "Menjual token di exchange",
+        "Membeli token baru"
+      ],
+      "answer": "Mengunci token untuk mendukung jaringan dan mendapatkan reward"
+    },
+    {
+      "question": "Apa kepanjangan dari DAO?",
+      "options": [
+        "Decentralized Autonomous Organization",
+        "Digital Asset Option",
+        "Distributed Application Organization",
+        "Data Access Object"
+      ],
+      "answer": "Decentralized Autonomous Organization"
+    },
+    {
+      "question": "Siapa Nama Nenek vitalik (Founder ETH)?",
+      "options": [
+        "Vandalisme",
+        "Vuad",
+        "Vantastik",
+        "VAKYU hehe"
+      ],
+      "answer": "VAKYU hehe"
+    },
+    {
+      "question": "Apa yang dimaksud dengan liquidity pool?",
+      "options": [
+          "Alamat wallet dengan saldo besar",
+          "Platform exchange",
+          "Kumpulan likuiditas untuk trading di DeFi",
+        "Token baru"
+      ],
+      "answer": "Kumpulan likuiditas untuk trading di DeFi"
+    },
+    {
+      "question": "Apa kepanjangan dari DApp?",
+      "options": [
+        "Decentralized Application",
+        "Digital Application",
+        "Distributed Application",
+        "Data Application"
+      ],
+      "answer": "Decentralized Application"
+    },
+    {
+      "question": "Apa fungsi dari oracle di blockchain?",
+      "options": [
+          "Membuat token baru",
+          "Menjalankan smart contract",
+          "Menyimpan data transaksi",
+          "Menghubungkan blockchain dengan data dunia nyata"
+      ],
+      "answer": "Menghubungkan blockchain dengan data dunia nyata"
+    },
+    {
+      "question": "Siapa yang menemukan Bitcoin?",
+      "options": [
+        "Vitalik Buterin",
+        "Elon Musk",
+        "Charles Hoskinson",
+        "Satoshi Nakamoto"
+      ],
+      "answer": "Satoshi Nakamoto"
+    },
+    {
+      "question": "Apa nama token asli di jaringan Binance Smart Chain?",
+      "options": [
+        "BNB",
+        "BSC",
+        "Binance Token",
+        "BUSD"
+      ],
+      "answer": "BNB"
+    },
+    {
+      "question": "Apa itu yield farming?",
+      "options": [
+        "Menanam token untuk mendapat bunga dan reward di DeFi",
+        "Membeli token murah",
+        "Menjual token dengan cepat",
+        "Trading di exchange"
+      ],
+      "answer": "Menanam token untuk mendapat bunga dan reward di DeFi"
+    },
+    {
+      "question": "Apa itu tokenomics?",
+      "options": [
+          "Jenis token",
+          "Alamat token",
+          "Ilmu tentang ekonomi token",
+          "Exchange token"
+      ],
+      "answer": "Ilmu tentang ekonomi token"
+    },
+    {
+      "question": "Apa itu Layer 2 scaling?",
+      "options": [
+          "Token baru di blockchain",
+          "Alamat wallet kedua",
+          "Solusi mempercepat transaksi di blockchain utama",
+        "Jenis konsensus baru"
+      ],
+      "answer": "Solusi mempercepat transaksi di blockchain utama"
+    },
+    {
+      "question": "Apa tujuan dari hard fork dalam blockchain?",
+      "options": [
+        "Mengubah protokol blockchain secara permanen",
+        "Membuat token baru",
+        "Melakukan transaksi besar",
+        "Menghapus transaksi lama"
+      ],
+      "answer": "Mengubah protokol blockchain secara permanen"
+    },
+    {
+        "question": "Dalam konteks Ethereum 2.0, jelaskan secara teknis mekanisme \"sharding\" dan bagaimana sharding dapat meningkatkan throughput transaksi tanpa mengorbankan keamanan jaringan?",
+        "options": [
+          "Memecah blockchain menjadi beberapa bagian agar validator bisa memproses transaksi secara paralel.",
+          "Mengurangi ukuran blok secara drastis agar lebih cepat diproses.",
+          "Meningkatkan jumlah transaksi per blok dengan menaikkan gas limit.",
+          "Menghapus node yang tidak aktif dari jaringan."
+        ],
+        "answer": "Memecah blockchain menjadi beberapa bagian agar validator bisa memproses transaksi secara paralel."
+      },
+      {
+        "question": "Apa risiko utama dari penggunaan Automated Market Maker (AMM) berbasis constant product formula (seperti Uniswap v2) terkait dengan impermanent loss, dan bagaimana pendekatan algoritmik baru di AMM generasi berikutnya berusaha mengatasi masalah ini?",
+        "options": [
+          "Impermanent loss terjadi karena perubahan harga relatif token; AMM baru menggunakan kurva bonding lebih kompleks untuk mengurangi loss.",
+          "Risiko kehilangan token karena hack; AMM baru menambahkan multisig.",
+          "Gas fee tinggi; AMM baru menggunakan layer-2.",
+          "Transaksi gagal; AMM baru menggunakan oracle yang lebih akurat."
+        ],
+        "answer": "Impermanent loss terjadi karena perubahan harga relatif token; AMM baru menggunakan kurva bonding lebih kompleks untuk mengurangi loss."
+      },
+      {
+        "question": "Jelaskan secara detail konsep “reentrancy attack” dalam smart contract Ethereum dan bagaimana kontrak modern mengimplementasikan proteksi terhadap serangan ini?",
+        "options": [
+          "Serangan berulang pada fungsi yang memungkinkan eksekusi kode sebelum status kontrak diperbarui; proteksi menggunakan modifier `nonReentrant` atau pattern Checks-Effects-Interactions.",
+          "Serangan DDoS pada node Ethereum; proteksi dengan firewall.",
+          "Mencuri private key; proteksi dengan enkripsi.",
+          "Manipulasi harga token; proteksi dengan oracle."
+        ],
+        "answer": "Serangan berulang pada fungsi yang memungkinkan eksekusi kode sebelum status kontrak diperbarui; proteksi menggunakan modifier `nonReentrant` atau pattern Checks-Effects-Interactions."
+      },
+      {
+        "question": "Dalam model Proof of Stake (PoS), bagaimana mekanisme \"slashing\" berfungsi dan apa tujuan utamanya dalam menjaga keamanan jaringan?",
+        "options": [
+          "Menghukum validator yang berperilaku buruk dengan kehilangan sebagian atau seluruh stake-nya untuk mencegah serangan.",
+          "Memberikan reward ekstra kepada validator yang aktif.",
+          "Menghapus transaksi berbahaya.",
+          "Mempercepat konfirmasi blok."
+        ],
+        "answer": "Menghukum validator yang berperilaku buruk dengan kehilangan sebagian atau seluruh stake-nya untuk mencegah serangan."
+      },
+      {
+        "question": "Apa peran dari 'state root' dalam mekanisme konsensus Ethereum dan bagaimana state root membantu menjaga integritas data pada blockchain?",
+        "options": [
+            "Menentukan harga gas untuk transaksi.",
+            "Menentukan urutan transaksi dalam blok.",
+            "Merepresentasikan snapshot dari semua akun dan saldo pada satu blok; memverifikasi konsistensi data secara efisien.",
+          "Menentukan validator yang berhak membuat blok."
+        ],
+        "answer": "Merepresentasikan snapshot dari semua akun dan saldo pada satu blok; memverifikasi konsistensi data secara efisien."
+      },
+      {
+        "question": "Jelaskan bagaimana mekanisme 'flash loan' bekerja dan sebutkan potensi risiko yang dapat dimanfaatkan oleh penyerang di DeFi?",
+        "options": [
+            "Meminjam dana dengan jaminan crypto; risiko gagal bayar.",
+            "Menyimpan token untuk staking; risiko kehilangan reward.",
+            "Menukar token dengan biaya rendah; risiko slippage.",
+            "Meminjam dana tanpa jaminan dalam satu transaksi; risiko termasuk manipulasi pasar dan serangan arbitrase."
+        ],
+        "answer": "Meminjam dana tanpa jaminan dalam satu transaksi; risiko termasuk manipulasi pasar dan serangan arbitrase."
+      },
+      {
+        "question": "Apa itu 'Merkle Tree' dan bagaimana strukturnya digunakan dalam verifikasi transaksi di blockchain?",
+        "options": [
+            "Algoritma kriptografi untuk enkripsi transaksi.",
+            "Protokol konsensus pada blockchain PoW.",
+            "Struktur data pohon hash yang memungkinkan verifikasi efisien dan aman dari set data besar tanpa mengakses seluruh data.",
+          "Jenis token non-fungible."
+        ],
+        "answer": "Struktur data pohon hash yang memungkinkan verifikasi efisien dan aman dari set data besar tanpa mengakses seluruh data."
+      },
+      {
+        "question": "Bagaimana algoritma konsensus Delegated Proof of Stake (DPoS) bekerja dan apa kelebihan utamanya dibandingkan Proof of Stake (PoS)?",
+        "options": [
+            "Validator dirotasi secara acak; lebih desentralisasi dibandingkan PoS.",
+            "Memerlukan bukti kerja tambahan; lebih aman dibandingkan PoS.",
+            "Pemegang token memilih sejumlah delegasi untuk validasi blok; lebih cepat dan skalabel dibandingkan PoS.",
+          "Menggunakan staking token langsung tanpa delegasi; lebih sederhana dibandingkan PoS."
+        ],
+        "answer": "Pemegang token memilih sejumlah delegasi untuk validasi blok; lebih cepat dan skalabel dibandingkan PoS."
+      },
+      {
+        "question": "Apa fungsi dari gas limit dan gas price dalam transaksi Ethereum dan bagaimana keduanya memengaruhi eksekusi transaksi?",
+        "options": [
+          "Gas limit menentukan maksimum unit gas yang digunakan, gas price menentukan biaya per unit gas; keduanya mempengaruhi prioritas dan biaya transaksi.",
+          "Gas limit menentukan total biaya transaksi, gas price menentukan waktu eksekusi.",
+          "Gas limit menentukan kecepatan transaksi, gas price menentukan validator yang digunakan.",
+          "Gas limit dan gas price tidak berpengaruh pada transaksi."
+        ],
+        "answer": "Gas limit menentukan maksimum unit gas yang digunakan, gas price menentukan biaya per unit gas; keduanya mempengaruhi prioritas dan biaya transaksi."
+      },
+      {
+        "question": "Jelaskan apa itu 'oracle' dalam ekosistem blockchain dan bagaimana oracle menjaga keakuratan data di smart contract?",
+        "options": [
+            "Oracle adalah node validator di jaringan PoS.",
+            "Oracle adalah pihak ketiga yang menyediakan data eksternal ke smart contract; menjaga keakuratan dengan berbagai metode validasi data.",
+          "Oracle adalah protokol untuk mengirim token antar chain.",
+          "Oracle adalah algoritma untuk hashing data."
+        ],
+        "answer": "Oracle adalah pihak ketiga yang menyediakan data eksternal ke smart contract; menjaga keakuratan dengan berbagai metode validasi data."
+      },
+      {
+        "question": "Dalam konteks zk-SNARKs, apa peran dari 'trusted setup' dan mengapa hal ini dianggap kontroversial?",
+        "options": [
+            "Trusted setup adalah proses pemilihan validator baru dalam PoS.",
+            "Trusted setup adalah proses menghasilkan parameter awal yang diperlukan untuk zk-SNARKs; kontroversial karena jika bocor, bisa memungkinkan pembuatan bukti palsu.",
+          "Trusted setup adalah protokol pengiriman token lintas-chain.",
+          "Trusted setup adalah metode enkripsi data transaksi."
+        ],
+        "answer": "Trusted setup adalah proses menghasilkan parameter awal yang diperlukan untuk zk-SNARKs; kontroversial karena jika bocor, bisa memungkinkan pembuatan bukti palsu."
+      },
+      {
+        "question": "Apa perbedaan utama antara token ERC-20 dan ERC-721 di Ethereum?",
+        "options": [
+            "ERC-20 adalah token untuk staking, ERC-721 untuk governance.",
+            "ERC-20 adalah token fungible (identik dan dapat dipertukarkan), ERC-721 adalah token non-fungible (unik dan tidak dapat dipertukarkan).",
+          "ERC-20 menggunakan proof-of-work, ERC-721 proof-of-stake.",
+          "ERC-20 digunakan untuk NFT, ERC-721 untuk DeFi."
+        ],
+        "answer": "ERC-20 adalah token fungible (identik dan dapat dipertukarkan), ERC-721 adalah token non-fungible (unik dan tidak dapat dipertukarkan)."
+      },
+      {
+        "question": "Bagaimana mekanisme 'time lock' bekerja dalam smart contract dan apa kegunaannya dalam konteks keamanan crypto?",
+        "options": [
+          "Time lock menunda eksekusi fungsi smart contract sampai waktu tertentu tercapai; digunakan untuk mengamankan dana dan eksekusi bertahap.",
+          "Time lock menghapus transaksi lama secara otomatis.",
+          "Time lock mempercepat konfirmasi blok.",
+          "Time lock membatasi jumlah transaksi per detik."
+        ],
+        "answer": "Time lock menunda eksekusi fungsi smart contract sampai waktu tertentu tercapai; digunakan untuk mengamankan dana dan eksekusi bertahap."
+      },
+      {
+        "question": "Apa itu 'front-running' dalam konteks transaksi blockchain dan bagaimana protokol modern berusaha mengurangi dampaknya?",
+        "options": [
+          "Front-running adalah praktik menempatkan transaksi lebih dulu untuk mengambil keuntungan; dikurangi dengan teknik seperti commit-reveal dan ordering yang adil.",
+          "Front-running adalah serangan DDoS pada node validator.",
+          "Front-running adalah penghapusan transaksi dari mempool.",
+          "Front-running adalah validasi transaksi ganda."
+        ],
+        "answer": "Front-running adalah praktik menempatkan transaksi lebih dulu untuk mengambil keuntungan; dikurangi dengan teknik seperti commit-reveal dan ordering yang adil."
+      },
+      {
+        "question": "Dalam DeFi, apa yang dimaksud dengan 'liquidity mining' dan bagaimana mekanisme insentifnya bekerja?",
+        "options": [
+          "Liquidity mining adalah proses menyediakan likuiditas ke pool dan mendapatkan token reward sebagai insentif dari protokol.",
+          "Liquidity mining adalah pertambangan token menggunakan komputer khusus.",
+          "Liquidity mining adalah penarikan likuiditas secara otomatis.",
+          "Liquidity mining adalah pembakaran token untuk meningkatkan nilai."
+        ],
+        "answer": "Liquidity mining adalah proses menyediakan likuiditas ke pool dan mendapatkan token reward sebagai insentif dari protokol."
+      },
+      {
+        "question": "Bagaimana konsep 'atomic swap' memungkinkan pertukaran aset antar blockchain tanpa pihak ketiga?",
+        "options": [
+          "Atomic swap menggunakan smart contract dengan hash time-locked contracts (HTLC) agar transaksi kedua pihak terjadi secara simultan atau batal bersama.",
+          "Atomic swap menggunakan centralized exchange untuk pertukaran.",
+          "Atomic swap memerlukan pihak ketiga sebagai escrow.",
+          "Atomic swap hanya berlaku di jaringan yang sama."
+        ],
+        "answer": "Atomic swap menggunakan smart contract dengan hash time-locked contracts (HTLC) agar transaksi kedua pihak terjadi secara simultan atau batal bersama."
+      },
+      {
+        "question": "Apa itu 'dust attack' di jaringan blockchain dan bagaimana cara mitigasinya?",
+        "options": [
+          "Dust attack adalah serangan yang mengirimkan transaksi dengan nilai sangat kecil untuk mengganggu wallet; mitigasi dengan filter transaksi kecil.",
+          "Dust attack adalah pembobolan private key.",
+          "Dust attack adalah penyerangan node validator.",
+          "Dust attack adalah manipulasi harga token."
+        ],
+        "answer": "Dust attack adalah serangan yang mengirimkan transaksi dengan nilai sangat kecil untuk mengganggu wallet; mitigasi dengan filter transaksi kecil."
+      },
+      {
+        "question": "Dalam konteks token governance, apa itu 'tokenomics' dan bagaimana pengaruhnya terhadap keputusan dalam protokol DeFi?",
+        "options": [
+          "Tokenomics adalah studi tentang distribusi, insentif, dan penggunaan token yang mempengaruhi partisipasi dan keputusan governance.",
+          "Tokenomics adalah algoritma kriptografi untuk token.",
+          "Tokenomics adalah smart contract standar untuk NFT.",
+          "Tokenomics adalah metode validasi transaksi."
+        ],
+        "answer": "Tokenomics adalah studi tentang distribusi, insentif, dan penggunaan token yang mempengaruhi partisipasi dan keputusan governance."
+      },
+      {
+        "question": "Jelaskan perbedaan antara 'hot wallet' dan 'cold wallet' serta kelebihan dan kekurangannya dalam konteks keamanan crypto.",
+        "options": [
+          "Hot wallet terkoneksi dengan internet, mudah digunakan tapi rentan serangan; cold wallet offline, lebih aman tapi kurang praktis.",
+          "Hot wallet adalah dompet hardware, cold wallet software.",
+          "Hot wallet hanya untuk NFT, cold wallet hanya untuk token ERC-20.",
+          "Hot wallet menyimpan private key di cloud, cold wallet di blockchain."
+        ],
+        "answer": "Hot wallet terkoneksi dengan internet, mudah digunakan tapi rentan serangan; cold wallet offline, lebih aman tapi kurang praktis."
+      },
+      {
+        "question": "Bagaimana protokol Layer 1 dan Layer 2 berinteraksi dalam meningkatkan skalabilitas blockchain?",
+        "options": [
+          "Layer 2 memproses transaksi off-chain untuk mengurangi beban Layer 1 dan kemudian mengirimkan data ringkas ke Layer 1.",
+          "Layer 1 mengontrol Layer 2 secara penuh tanpa interaksi.",
+          "Layer 2 menggantikan Layer 1 sepenuhnya.",
+          "Layer 1 dan Layer 2 adalah nama token dalam blockchain."
+        ],
+        "answer": "Layer 2 memproses transaksi off-chain untuk mengurangi beban Layer 1 dan kemudian mengirimkan data ringkas ke Layer 1."
+      },
+      {
+        "question": "Apa fungsi 'nonce' dalam transaksi blockchain dan mengapa sangat penting untuk keamanan dan urutan transaksi?",
+        "options": [
+          "Nonce mencegah replay attack dan memastikan transaksi diproses dalam urutan yang benar.",
+          "Nonce adalah jumlah token dalam transaksi.",
+          "Nonce menentukan validator yang memilih blok.",
+          "Nonce adalah biaya gas."
+        ],
+        "answer": "Nonce mencegah replay attack dan memastikan transaksi diproses dalam urutan yang benar."
+      },
+      {
+        "question": "Jelaskan konsep 'yield farming' dan bagaimana perbedaan antara yield farming dan staking dalam DeFi.",
+        "options": [
+          "Yield farming melibatkan perpindahan likuiditas antar protokol untuk mendapatkan reward maksimal; staking biasanya mengunci token di satu protokol.",
+          "Yield farming adalah pertambangan koin baru, staking pembelian token.",
+          "Yield farming untuk NFT, staking untuk token ERC-20.",
+          "Yield farming dan staking adalah hal yang sama."
+        ],
+        "answer": "Yield farming melibatkan perpindahan likuiditas antar protokol untuk mendapatkan reward maksimal; staking biasanya mengunci token di satu protokol."
+      },
+      {
+        "question": "Apa itu 'dust transaction' dan bagaimana dampaknya terhadap jaringan blockchain?",
+        "options": [
+          "Transaksi dengan nilai sangat kecil yang bisa membebani mempool dan memperlambat jaringan.",
+          "Transaksi dengan biaya gas tinggi.",
+          "Transaksi validasi blok baru.",
+          "Transaksi yang membakar token."
+        ],
+        "answer": "Transaksi dengan nilai sangat kecil yang bisa membebani mempool dan memperlambat jaringan."
+      },
+      {
+        "question": "Bagaimana teknologi 'sharding' membantu meningkatkan throughput blockchain dan apa tantangannya?",
+        "options": [
+          "Sharding membagi blockchain menjadi bagian kecil yang diproses paralel; tantangannya adalah sinkronisasi dan keamanan antar shard.",
+          "Sharding menghapus transaksi lama.",
+          "Sharding adalah proses mining lebih cepat.",
+          "Sharding mengurangi biaya gas menjadi nol."
+        ],
+        "answer": "Sharding membagi blockchain menjadi bagian kecil yang diproses paralel; tantangannya adalah sinkronisasi dan keamanan antar shard."
+      },
+      {
+        "question": "Bagaimana layer-2 rollups seperti Optimistic Rollups dan ZK-Rollups berbeda dalam hal validasi data transaksi dan apa kelebihan masing-masing?",
+        "options": [
+          "Optimistic Rollups mengasumsikan transaksi valid dan hanya memverifikasi saat disangkal; ZK-Rollups menggunakan proof kriptografi untuk validasi langsung.",
+          "Optimistic Rollups menggunakan sharding; ZK-Rollups menggunakan proof-of-work.",
+          "Optimistic Rollups memerlukan banyak gas; ZK-Rollups tidak menggunakan gas sama sekali.",
+          "Optimistic Rollups hanya untuk token ERC-20; ZK-Rollups hanya untuk NFT."
+        ],
+        "answer": "Optimistic Rollups mengasumsikan transaksi valid dan hanya memverifikasi saat disangkal; ZK-Rollups menggunakan proof kriptografi untuk validasi langsung."
+      },
+    {
+      "question": "Apa itu Metamask?",
+      "options": [
+        "Wallet crypto berbasis browser",
+        "Token DeFi",
+        "Jenis smart contract",
+        "Exchange crypto"
+      ],
+      "answer": "Wallet crypto berbasis browser"
+    },
+    {
+      "question": "Apa itu private key dalam crypto?",
+      "options": [
+        "Kode rahasia untuk akses wallet",
+        "Alamat publik wallet",
+        "Token reward",
+        "Nama token"
+      ],
+      "answer": "Kode rahasia untuk akses wallet"
+    }
+  ]
+  
