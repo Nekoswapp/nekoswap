@@ -4,7 +4,8 @@ import { ethers, Contract, Signer, Provider } from "ethers";
 import Farming from "../Data/Farming";
 import { useAccount } from "wagmi";
 import { ToastContainer, toast } from 'react-toastify';
-import Abi from "../Data/Abi";
+import { useWalletClient } from 'wagmi'
+import { BrowserProvider } from "ethers";
 type Pool = {
   id: number;
   TokenReward: string;
@@ -29,7 +30,7 @@ interface FarmsProps {
 const Farms: React.FC<FarmsProps> = ({ farms }) => {
   const { address, isConnected } = useAccount();
   
-
+  const { data: walletClient } = useWalletClient()
   const [stakeAmounts, setStakeAmounts] = useState<{ [key: number]: string }>({});
   const [userStakes, setUserStakes] = useState<{ [key: number]: string }>({});
   const [claimableRewards, setClaimableRewards] = useState<{ [key: number]: string }>({});
@@ -48,23 +49,25 @@ const Farms: React.FC<FarmsProps> = ({ farms }) => {
   );
 
   // Set signer on wallet connect
-  useEffect(() => {
+ useEffect(() => {
+  
     const init = async () => {
-      if (typeof window !== "undefined" && window.ethereum && isConnected && address) {
+      if (walletClient && isConnected && address) {
         try {
-          const provider = new ethers.BrowserProvider(window.ethereum as ethers.Eip1193Provider);
-          const walletSigner = await provider.getSigner();
-          setSigner(walletSigner);
+          const provider = new BrowserProvider(walletClient)
+          const walletSigner = await provider.getSigner()
+          setSigner(walletSigner)
         } catch (error) {
-          console.error("Failed to get signer", error);
-          setSigner(null);
+          console.error("Failed to get signer", error)
+          setSigner(null)
         }
       } else {
-        setSigner(null);
+        setSigner(null)
       }
-    };
-    init();
-  }, [isConnected, address]);
+    }
+
+    init()
+  }, [walletClient, isConnected, address])
 
   // Fetch native fee per pool
   const fetchNativeFee = useCallback(

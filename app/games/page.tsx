@@ -1,13 +1,13 @@
 "use client";
-
 import React from "react";
-import SlotGame from "@/components/Game";
 import { Footer } from "@/components/Footer";
+import QuizGame from "@/components/Game";
+
 export default function DocsPage() {
   return (
     <div>
       <main>
-     
+    <QuizGame/>
       <div className="flex-1 my-6 flex justify-center">
         <img
           src="/images/quis.png"

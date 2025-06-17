@@ -11,8 +11,8 @@ type Pool = {
   id: number;
   TokenReward: string;
   name: string;
-  amount: number; // total staked, akan di-update dari contract
-  apr: number;    // apr, juga akan di-fetch
+  amount: number; 
+  apr: number;   
   status: string;
   logo: string;
   userStake: number;

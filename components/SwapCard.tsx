@@ -13,8 +13,7 @@ import addresses from "@/Data/addresses.json";
 import { useAccount } from "wagmi";
 import { writeContract, waitForTransactionReceipt } from 'wagmi/actions';
 import {  toast } from "react-toastify";
-import { BrowserProvider } from "ethers";
-import { getAddress, formatUnits, parseUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 import { usePublicClient, useWalletClient } from 'wagmi'
 import { readContract } from 'wagmi/actions'
 import {config} from "../components/Web3Provider"
@@ -41,7 +40,7 @@ const loadBalances = async () => {
   const getBal = async (token: typeof tokenA) => {
     if (isETH(token)) {
       const bal = await publicClient.getBalance({ address: address as `0x${string}` });
-      return ethers.formatUnits(bal, 18);
+      return formatUnits(bal, token.decimals);
     } else {
      
       const bal = await readContract(config, {
@@ -51,7 +50,7 @@ const loadBalances = async () => {
   args: [address as `0x${string}`],
 });
 
-      return ethers.formatUnits(bal as bigint, token.decimals || 18);
+      return ethers.formatUnits(bal, token.decimals );
 
     }
   };
@@ -96,28 +95,41 @@ const result = await readContract(config, {
 };
 
 
-  const approveIfNeeded = async (
-    tokenAddress: string,
-    amount: bigint,
-    signer: ethers.Signer
-  ) => {
-    const token = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
-    const allowance = await token.allowance(address, addresses.Router);
-    if (allowance < amount) {
-      const tx = await token.approve(addresses.Router, amount);
-      await tx.wait();
-    }
-  };
+ // Fungsi approveIfNeeded berbasis wagmi
+const approveIfNeeded = async (
+  tokenAddress: `0x${string}`,
+  amount: bigint,
+  owner: `0x${string}`
+) => {
+  const allowance = await readContract(config, {
+    address: tokenAddress,
+    abi: ERC20_ABI,
+    functionName: 'allowance',
+    args: [owner, addresses.Router as `0x${string}`],
+  });
 
+  if (allowance < amount) {
+    const txHash = await writeContract(config, {
+      address: tokenAddress,
+      abi:ERC20_ABI,
+      functionName: 'approve',
+      args: [addresses.Router as `0x${string}`, amount],
+      account: owner,
+    });
+
+    await waitForTransactionReceipt(config, {
+      hash: txHash,
+    });
+  }
+};
 const handleSwap = async () => {
-  
-  if (!walletClient ||!window.ethereum || !address || amountA <= 0) return alert("Masukkan jumlah yang valid");
+  if (!walletClient || !address || amountA <= 0) {
+    return alert("Masukkan jumlah yang valid");
+  }
+
   setIsLoading(true);
 
   try {
-  
-   const provider = new ethers.BrowserProvider(window.ethereum);
-const signerInstance = await provider.getSigner();
     const amountIn = parseUnits(amountA.toString(), tokenA.decimals);
     const amountOutMin = parseUnits(
       (amountB * (1 - (slippage || 0.5) / 100)).toFixed(tokenB.decimals),
@@ -131,45 +143,42 @@ const signerInstance = await provider.getSigner();
       ? [tokenA.address, addresses.WETH]
       : [tokenA.address, tokenB.address];
 
-    // ✅ Lakukan approve dulu jika tokenA bukan ETH
+    // ✅ Approve jika tokenA bukan ETH
     if (!isETH(tokenA)) {
-      if (!window.ethereum) {
-  toast.error("Wallet tidak tersedia");
-  return;
-}
-   const provider = new ethers.BrowserProvider(window.ethereum);
-const signerInstance = await provider.getSigner();
-      await approveIfNeeded(tokenA.address, amountIn, signerInstance);
+      await approveIfNeeded(tokenA.address as `0x${string}`, amountIn, address as `0x${string}`);
     }
+
+    const functionName = isETH(tokenA)
+      ? 'swapExactETHForTokens'
+      : isETH(tokenB)
+      ? 'swapExactTokensForETH'
+      : 'swapExactTokensForTokens';
+
+    const args =
+      functionName === 'swapExactETHForTokens'
+        ? [amountOutMin, path, address as `0x${string}`, BigInt(deadline)] // 4 argumen
+        : [amountIn, amountOutMin, path, address as `0x${string}`, BigInt(deadline)]; // 5 argumen
 
     const txHash = await writeContract(config, {
       address: addresses.Router as `0x${string}`,
       abi: routerABI,
-      functionName: isETH(tokenA)
-        ? "swapExactETHForTokens"
-        : isETH(tokenB)
-        ? "swapExactTokensForETH"
-        : "swapExactTokensForTokens",
-      args: [
-        amountIn,
-        amountOutMin,
-        path,
-        address as `0x${string}`,
-        BigInt(deadline),
-      ],
+      functionName,
+      args,
       value: isETH(tokenA) ? amountIn : undefined,
       account: walletClient.account,
     });
 
-    await waitForTransactionReceipt(config, { hash: txHash });
+    await waitForTransactionReceipt(config, {
+      hash: txHash,
+    });
 
-    toast.success("Swap Success !");
+    toast.success("Swap Success!");
     await loadBalances();
     setAmountA(0);
     setAmountB(0);
   } catch (err) {
     console.error("Swap error:", err);
-    toast.error("Swap failed !");
+    toast.error("Swap failed!");
   } finally {
     setIsLoading(false);
   }

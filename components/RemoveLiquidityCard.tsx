@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState, useEffect, useCallback } from "react";
 import { ethers, ZeroAddress } from "ethers";
-import { useAccount } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import { Card, CardHeader, CardFooter } from "@heroui/card";
 import { Select, SelectItem } from "@heroui/select";
 import { Avatar } from "@heroui/avatar";
@@ -11,176 +12,157 @@ import { Input } from "@heroui/input";
 import { ERC20_ABI, TOKEN_LIST } from "@/Data/token";
 import routerABI from "@/Data/routerABI.json";
 import lpTokenABI from "@/Data/pairABI.json";
-import {  toast } from "react-toastify";
+import { BrowserProvider } from "ethers";
+import type { Eip1193Provider } from "ethers";
+import { toast } from "react-toastify";
+
 const ROUTER_ADDRESS = "0xCf406235c78dc620B19bF772bAA9CFF468D0fEb9";
 
 export default function RemoveLiquidityCard() {
   const { address, isConnected } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
   const [tokenA, setTokenA] = useState(TOKEN_LIST[0]);
   const [tokenB, setTokenB] = useState(TOKEN_LIST[1]);
-  const [lpTokenAddress, setLpTokenAddress] = useState<string>("");
-  const [liquidity, setLiquidity] = useState<string>("");
-  const [balanceLP, setBalanceLP] = useState<string>("0");
-  const [lpDecimals, setLpDecimals] = useState<number>(18);
+  const [lpTokenAddress, setLpTokenAddress] = useState("");
+  const [liquidity, setLiquidity] = useState("");
+  const [balanceLP, setBalanceLP] = useState("0");
+  const [lpDecimals, setLpDecimals] = useState(18);
   const [removing, setRemoving] = useState(false);
 
-  // Dapatkan provider dan signer dari window.ethereum
-  async function getProviderAndSigner() {
-    if (!window.ethereum) throw new Error("Wallet not found");
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    return { provider, signer };
-  }
+  const getSigner = useCallback(async () => {
+    if (!walletClient) throw new Error("Wallet client not found");
+    const provider = new BrowserProvider(walletClient.transport as Eip1193Provider);
+    return provider.getSigner();
+  }, [walletClient]);
 
-  // Dapatkan alamat pair LP token dari factory lewat router
+  const getContract = useCallback(
+    (addr: string, abi: any) => {
+      if (!walletClient) throw new Error("Wallet not connected");
+      const provider = new BrowserProvider(walletClient.transport as Eip1193Provider);
+      return new ethers.Contract(addr, abi, provider);
+    },
+    [walletClient]
+  );
+
   async function getPairAddress(
     router: ethers.Contract,
     tokenA: string,
     tokenB: string,
-    provider: ethers.BrowserProvider
-  ): Promise<string> {
-    try {
-      const factoryAddress: string = await router.factory();
-      const factoryABI = [
-        "function getPair(address,address) external view returns (address)",
-      ];
-      const factory = new ethers.Contract(factoryAddress, factoryABI, provider);
-      return await factory.getPair(tokenA, tokenB);
-    } catch {
-      return ZeroAddress;
-    }
-  }
-
-  // Load saldo LP token user
-  async function loadLPBalance() {
-    if (!isConnected || !address) {
-      setLpTokenAddress("");
-      setBalanceLP("0");
-      return;
-    }
-
-    try {
-      const { provider, signer } = await getProviderAndSigner();
-
-      const router = new ethers.Contract(ROUTER_ADDRESS, routerABI, provider);
-      const pairAddress = await getPairAddress(router, tokenA.address, tokenB.address, provider);
-
-      if (!pairAddress || pairAddress === ZeroAddress) {
-        setLpTokenAddress("");
-        setBalanceLP("0");
-        return;
-      }
-
-      setLpTokenAddress(pairAddress);
-
-      const pair = new ethers.Contract(pairAddress, lpTokenABI, provider);
-      const balance = await pair.balanceOf(address);
-      const decimals = await pair.decimals();
-
-      setLpDecimals(decimals);
-      setBalanceLP(ethers.formatUnits(balance, decimals));
-    } catch (error) {
-      console.error("Load LP balance error:", error);
-      setBalanceLP("0");
-      setLpTokenAddress("");
-    }
-  }
-
-  // Cek dan approve router untuk menggunakan LP token jika belum cukup allowance
-  async function approveIfNeeded(
-    signer: ethers.Signer,
-    spender: string,
-    token: string,
-    amount: bigint
+    provider: ethers.Provider
   ) {
-    const contract = new ethers.Contract(token, ERC20_ABI, signer);
-    const owner = await signer.getAddress();
-    const allowance = await contract.allowance(owner, spender);
-    if (allowance < amount) {
-      const tx = await contract.approve(spender, ethers.MaxUint256);
-      await tx.wait();
-    }
+    const factoryAddress = await router.factory();
+    const factoryABI = ["function getPair(address,address) view returns (address)"];
+    const factory = new ethers.Contract(factoryAddress, factoryABI, provider);
+    return await factory.getPair(tokenA, tokenB);
   }
 
-  // Ambil timestamp block terbaru sebagai deadline transaksi
-  async function getBlockchainTimestamp(provider: ethers.Provider): Promise<number> {
-    const blockNumber = await provider.getBlockNumber();
-    const block = await provider.getBlock(blockNumber);
-    if (!block) throw new Error("Block not found");
-    return block.timestamp;
-  }
+  async function loadLPBalance() {
+    if (!isConnected || !walletClient || !address) return;
 
-  // Fungsi untuk remove liquidity
-  async function removeLiquidity() {
-    if (!isConnected || !address) {
-      toast.warning("Wallet not connected", {
-        position: "top-left",
-      });
+    const provider = new BrowserProvider(walletClient.transport as Eip1193Provider);
+    const router = new ethers.Contract(ROUTER_ADDRESS, routerABI, provider);
+    const pairAddress = await getPairAddress(router, tokenA.address, tokenB.address, provider);
+
+    if (!pairAddress || pairAddress === ZeroAddress) {
+      setLpTokenAddress("");
+      setBalanceLP("0");
       return;
     }
 
-    if (!/^(\d+\.?\d*|\.\d+)$/.test(liquidity)) {
-      toast.error("Amount not valid", {
-        position: "top-center",
-      });
-      
+    setLpTokenAddress(pairAddress);
+    const lp = new ethers.Contract(pairAddress, lpTokenABI, provider);
+    const balance = await lp.balanceOf(address);
+    const decimals = (await lp.decimals()) ?? 18;
+
+    setLpDecimals(decimals);
+    setBalanceLP(ethers.formatUnits(balance, decimals));
+  }
+
+  async function approveIfNeeded(spender: string, token: string, amount: bigint) {
+    try {
+      const signer = await getSigner();
+      const tokenContract = new ethers.Contract(token, ERC20_ABI, signer);
+      const owner = await signer.getAddress();
+      const allowance = await tokenContract.allowance(owner, spender);
+
+      if (allowance < amount) {
+        toast.info("Approving token...", { position: "bottom-left" });
+        const tx = await tokenContract.approve(spender, ethers.MaxUint256);
+        await tx.wait();
+        toast.success("Approve success!", { position: "bottom-left" });
+      }
+    } catch (err: any) {
+      console.error("Approve failed", err);
+      toast.error("Approve failed:");
+      throw err;
+    }
+  }
+
+  async function getDeadline(): Promise<number> {
+    if (!walletClient) {
+      toast.error("Wallet belum terhubung.");
+      throw new Error("Wallet not connected");
+    }
+
+    const provider = new BrowserProvider(walletClient.transport as Eip1193Provider);
+    const block = await provider.getBlock("latest");
+    return (block?.timestamp ?? Math.floor(Date.now() / 1000)) + 3600;
+  }
+
+  async function removeLiquidity() {
+    if (!isConnected || !walletClient || !address) {
+      toast.error("Wallet not connected", { position: "top-left" });
+      return;
+    }
+
+    if (!liquidity || isNaN(Number(liquidity)) || Number(liquidity) <= 0) {
+      toast.error("Amount invalid", { position: "top-center" });
       return;
     }
 
     if (!lpTokenAddress || lpTokenAddress === ZeroAddress) {
-      toast.error("Amount not valid", {
-        position: "top-center",
-      });
+      toast.error("LP Token not found", { position: "top-center" });
       return;
     }
 
     setRemoving(true);
-
     try {
-      const { provider, signer } = await getProviderAndSigner();
-      const router = new ethers.Contract(ROUTER_ADDRESS, routerABI, signer);
-
-      const deadline = (await getBlockchainTimestamp(provider)) + 3600; // 1 jam ke depan
+      const signer = await getSigner();
       const amountLP = ethers.parseUnits(liquidity, lpDecimals);
+      await approveIfNeeded(ROUTER_ADDRESS, lpTokenAddress, amountLP);
 
-      await approveIfNeeded(signer, ROUTER_ADDRESS, lpTokenAddress, amountLP);
+      const router = new ethers.Contract(ROUTER_ADDRESS, routerABI, signer);
+      const deadline = await getDeadline();
+
+      toast.info("Removing liquidity...", { position: "bottom-left" });
 
       const tx = await router.removeLiquidity(
         tokenA.address,
         tokenB.address,
         amountLP,
-        0, // minimal amount token A yang diterima (slippage protection)
-        0, // minimal amount token B yang diterima
+        0,
+        0,
         address,
         deadline
       );
 
       await tx.wait();
-
-      toast("Remove liquidity succses, have a nice day !", {
-        position: "bottom-left",
-      });
+      toast.success("Remove liquidity success!", { position: "bottom-left" });
       setLiquidity("");
       await loadLPBalance();
-    } catch (e: unknown) {
-      if (typeof e === "object" && e !== null) {
-        const err = e as { reason?: string; message?: string };
-        alert(`Error: ${err.reason || err.message || "Unknown error"}`);
-      } else {
-        toast.error("Remove liquidity failed !", {
-          position: "top-right",
-        });
-      }
+    } catch (err) {
+      console.error("Remove liquidity failed:", err);
+      toast.error("Remove failed: ");
     }
-
     setRemoving(false);
   }
 
-  // Load LP balance saat tokenA/tokenB berubah atau koneksi wallet berubah
   useEffect(() => {
-    loadLPBalance();
-  }, [tokenA, tokenB, isConnected, address]);
+    if (isConnected && walletClient) {
+      loadLPBalance();
+    }
+  }, [isConnected, tokenA, tokenB, address, walletClient]);
 
   return (
     <div className="items-center flex flex-col justify-center mt-0">
@@ -190,24 +172,11 @@ export default function RemoveLiquidityCard() {
         </CardHeader>
 
         {!isConnected ? (
-          <p className="text-center text-red-500 mt-4">
-            Wallet belum terhubung.
-          </p>
+          <p className="text-center text-red-500 mt-4">Wallet belum terhubung.</p>
         ) : (
           <>
-            {[ 
-              {
-                label: "Token A",
-                token: tokenA,
-                setter: setTokenA,
-                exclude: tokenB.symbol,
-              },
-              {
-                label: "Token B",
-                token: tokenB,
-                setter: setTokenB,
-                exclude: tokenA.symbol,
-              },
+            {[{ label: "Token A", token: tokenA, setter: setTokenA, exclude: tokenB.symbol },
+              { label: "Token B", token: tokenB, setter: setTokenB, exclude: tokenA.symbol }
             ].map(({ label, token, setter, exclude }) => (
               <div className="w-full mt-4" key={label}>
                 <p className="text-sm mb-1">{label}</p>
@@ -217,12 +186,8 @@ export default function RemoveLiquidityCard() {
                     className="w-full"
                     selectedKeys={[token.symbol]}
                     onSelectionChange={(keys) => {
-                      const selected = TOKEN_LIST.find(
-                        (t) =>
-                          t.symbol ===
-                          (typeof keys === "string"
-                            ? keys
-                            : Array.from(keys as Set<string>)[0])
+                      const selected = TOKEN_LIST.find(t =>
+                        t.symbol === (typeof keys === "string" ? keys : Array.from(keys)[0])
                       );
                       if (selected && selected.symbol !== exclude) setter(selected);
                     }}

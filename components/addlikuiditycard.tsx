@@ -7,13 +7,14 @@ import { Select, SelectItem } from "@heroui/select";
 import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
-import { useAccount } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 import pairAbi from "@/Data/pairABI.json";
 import addresses from "@/Data/addresses.json";
 import factoryABI from "@/Data/factoryABI.json";
 import routerABI from "@/Data/routerABI.json";
 import { ERC20_ABI, TOKEN_LIST } from "@/Data/token";
 import { ToastContainer, toast } from "react-toastify";
+
 export default function AddLiquidityCard() {
   const [tokenA, setTokenA] = useState(TOKEN_LIST[0]);
   const [tokenB, setTokenB] = useState(TOKEN_LIST[1]);
@@ -26,13 +27,14 @@ export default function AddLiquidityCard() {
   const [priceAtoB, setPriceAtoB] = useState(0);
 
   const { address, isConnected } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
   const isNative = (token: typeof tokenA) => token.isNative;
 
   const loadBalances = async () => {
-    if (!window.ethereum || !address) return;
+    if (!walletClient || !address) return;
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new ethers.BrowserProvider(walletClient);
       const balanceNative = await provider.getBalance(address);
 
       const tokenAContract = new ethers.Contract(tokenA.address, ERC20_ABI, provider);
@@ -55,9 +57,9 @@ export default function AddLiquidityCard() {
   };
 
   const fetchPairInfo = async () => {
-    if (!window.ethereum || !address) return;
+    if (!walletClient || !address) return;
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new ethers.BrowserProvider(walletClient);
       const factory = new ethers.Contract(addresses.factory, factoryABI, provider);
       const pair = await factory.getPair(tokenA.address, tokenB.address);
 
@@ -91,9 +93,7 @@ export default function AddLiquidityCard() {
   };
 
   useEffect(() => {
-    if (isConnected) {
-      loadBalances();
-    }
+    if (isConnected) loadBalances();
     fetchPairInfo();
   }, [tokenA, tokenB, address, isConnected]);
 
@@ -116,7 +116,7 @@ export default function AddLiquidityCard() {
 
     const other = isA ? tokenB : tokenA;
     if (selected.symbol === other.symbol) {
-      toast.warning("Token is not a same !", {
+      toast.warning("Token cannot be the same!", {
         position: "bottom-center",
       });
       return;
@@ -130,28 +130,18 @@ export default function AddLiquidityCard() {
   };
 
   const addLiquidity = async () => {
-    if (!window.ethereum) {
-      toast.error("Wallet extension not found !", {
-        position: "top-center",
-      });
+    if (!walletClient || !isConnected || !address) {
+      toast.error("Wallet not connected!", { position: "top-center" });
       return;
     }
-    if (!isConnected || !address) {
-      toast.info("connect your wallet please!", {
-        position: "bottom-center",
-      });
-      
+    if (amountA <= 0 || amountB <= 0) {
+      toast.warning("Invalid amounts", { position: "bottom-center" });
       return;
     }
-    if (amountA <= 0 || amountB <= 0) return toast.warning("amount not valid !", {
-      position: "bottom-center",
-    });
-    
 
     setIsLoading(true);
-
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      const provider = new ethers.BrowserProvider(walletClient);
       const signer = await provider.getSigner();
       const router = new ethers.Contract(addresses.Router, routerABI, signer);
 
@@ -218,15 +208,11 @@ export default function AddLiquidityCard() {
         await tx.wait();
       }
 
-      toast("Addliquidity succses, have a nice day", {
-        position: "bottom-left",
-      });
+      toast.success("Liquidity added successfully!", { position: "bottom-left" });
       await loadBalances();
     } catch (err) {
       console.error("AddLiquidity error:", err);
-      toast.error("Failed to addliquidity!", {
-        position: "top-center",
-      });
+      toast.error("Failed to add liquidity!", { position: "top-center" });
     } finally {
       setIsLoading(false);
     }
@@ -311,13 +297,12 @@ export default function AddLiquidityCard() {
 
         <CardFooter className="mt-4">
           <Button
-             className="w-full bg-orange-500 text-white hover:bg-orange-600"
+            className="w-full bg-orange-500 text-white hover:bg-orange-600"
             isLoading={isLoading}
             disabled={
               isLoading || amountA <= 0 || amountB <= 0 || tokenA.symbol === tokenB.symbol
             }
             onClick={addLiquidity}
-          
           >
             Add Liquidity
           </Button>

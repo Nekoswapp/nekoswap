@@ -1,18 +1,24 @@
 "use client";
 import { FaWallet } from "react-icons/fa";
 import { useEffect, useState, useMemo } from "react";
-import { ethers } from "ethers";
 import Image from "next/image";
 import tokens from "@/Data/walletToken.json";
-import { useAccount } from "wagmi";
+import { useAccount, usePublicClient } from "wagmi";
+import { formatUnits } from "viem";
 
 const ERC20_ABI = [
-  "function balanceOf(address owner) view returns (uint256)",
-  "function decimals() view returns (uint8)",
+  {
+    name: "balanceOf",
+    type: "function",
+    stateMutability: "view",
+    inputs: [{ name: "owner", type: "address" }],
+    outputs: [{ name: "", type: "uint256" }],
+  },
 ];
 
 export const WalletOverview = () => {
   const { address, isConnected } = useAccount();
+  const publicClient = usePublicClient();
   const [balances, setBalances] = useState<Record<string, string>>({});
 
   const formatBalanceShort = (value: number): string => {
@@ -23,9 +29,7 @@ export const WalletOverview = () => {
   };
 
   useEffect(() => {
-    if (!isConnected || !address || typeof window === "undefined" || !window.ethereum) return;
-
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    if (!isConnected || !address || !publicClient) return;
 
     const loadWalletData = async () => {
       const result: Record<string, string> = {};
@@ -33,12 +37,16 @@ export const WalletOverview = () => {
       for (const token of tokens) {
         try {
           if (token.address === "0x0000000000000000000000000000000000000000") {
-            const balance = await provider.getBalance(address);
-            result[token.symbol] = ethers.formatUnits(balance, token.decimals);
+            const balance = await publicClient.getBalance({ address });
+            result[token.symbol] = formatUnits(balance, token.decimals);
           } else {
-            const contract = new ethers.Contract(token.address, ERC20_ABI, provider);
-            const rawBalance = await contract.balanceOf(address);
-            result[token.symbol] = ethers.formatUnits(rawBalance, token.decimals);
+            const rawBalance = await publicClient.readContract({
+              address: token.address as `0x${string}`,
+              abi: ERC20_ABI,
+              functionName: "balanceOf",
+              args: [address as `0x${string}`],
+            });
+            result[token.symbol] = formatUnits(rawBalance as bigint, token.decimals);
           }
         } catch {
           result[token.symbol] = "0";
@@ -49,9 +57,8 @@ export const WalletOverview = () => {
     };
 
     loadWalletData();
-  }, [address, isConnected]);
+  }, [address, isConnected, publicClient]);
 
-  // Urutkan token berdasarkan balance terbesar ke terkecil
   const sortedTokens = useMemo(() => {
     if (!balances) return tokens;
     return [...tokens].sort((a, b) => {
@@ -79,7 +86,6 @@ export const WalletOverview = () => {
           )}
         </p>
 
-        {/* Token List */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {sortedTokens.map((token) => (
             <div
